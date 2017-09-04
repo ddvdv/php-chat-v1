@@ -1,24 +1,11 @@
 <?php
-try{
-	$bdd = new PDO('mysql:host=localhost;dbname=chatPhp;charset=utf8', 'root', 'root');
-} catch (Exception $e){
-	    echo('Erreur : ' . $e->getMessage());
-}
 
-	$req = $bdd->query('SELECT * FROM messages INNER JOIN users ON messages.users_idusers = users.idusers ORDER BY idmessages DESC');
+	include 'connectDB.php';
 
-	// while($messages = $req -> fetch()){
-	// // echo('<pre>');
-	// 	echo('<p>');
-	// 	echo($messages['date'].' '.$messages['nom'].': '.'<br>');
-	// 	echo($messages['content'].'</p>');
-	// // echo('<pre>');
-	// };
+	$req = $bdd->query('SELECT * FROM messages INNER JOIN users ON messages.users_idusers = users.idusers ORDER BY idmessages DESC LIMIT 10');
 
 	$sql_data= $req->fetchAll(PDO::FETCH_ASSOC);
-	// echo('<pre>');
-	// print_r($sql_data);
-	// echo('<pre>');
+
 	$length = count($sql_data);
 	for ($i=0; $i < $length; $i++) {	
 		echo('<p>');
@@ -33,7 +20,9 @@ try{
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="1">				
+	<noscript>
+		<meta http-equiv="refresh" content="1">	
+	</noscript>		
 	<title>Document</title>
 </head>
 <body>

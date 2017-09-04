@@ -25,7 +25,7 @@ function invitMsg(){
 	echo($_SESSION['name'].' dit:');
 	echo('<form method="post">
 			<input type="text" name="message">
-			<input type="submit" name="envoyer">
+			<input id="envoiMsg" type="submit" name="envoyer">
 		</form>
 		<form method="post">
 			<input type="submit" name="deconnect" value="Double cliquez pour vous déconnectez">
@@ -34,11 +34,8 @@ function invitMsg(){
 
 
 // Connection à la DB
-	try{
-		$bdd = new PDO('mysql:host=localhost;dbname=chatPhp;charset=utf8', 'root', 'root');
-	} catch (Exception $e){
-		    echo('Erreur : ' . $e->getMessage());
-	}
+include 'connectDB.php';
+
 
 // Si clic sur 'déconnect', destruction de la session
 	if(isset($_POST['deconnect'])){
