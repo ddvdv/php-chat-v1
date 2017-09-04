@@ -18,6 +18,8 @@
 	$sql_data= $req->fetchAll(PDO::FETCH_ASSOC);
 
 	// Renvoi en JSON pr affichage en JS
-	echo(json_encode($sql_data));
+	if (isset($sql_data[0])){
+		echo(json_encode($sql_data));
+	}
 
 ?>

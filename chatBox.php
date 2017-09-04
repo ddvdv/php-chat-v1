@@ -24,7 +24,7 @@ function invitLog(){
 function invitMsg(){
 	echo($_SESSION['name'].' dit:');
 	echo('<form method="post">
-			<input type="text" name="message">
+			<input type="text" name="message" id="message" autofocus>
 			<input id="envoiMsg" type="submit" name="envoyerMsg">
 		</form>
 		<form method="post">

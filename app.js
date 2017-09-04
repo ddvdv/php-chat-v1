@@ -7,9 +7,15 @@ var getLastMsg = function(){
 		type: 'POST',
 		data: {'lastMsg' : lastMsg},
 		success: function(msgLog){
-			$('#chatLog').append(displayMsg(msgLog));
+			if (msgLog != ''){
+				$('#chatLog').append(displayMsg(msgLog));
+				let toTheBottom = $('#chatLog')[0].scrollHeight;
+				$('#chatLog').animate({ scrollTop: toTheBottom }, 'slow');
+			}
+			console.log('ajax recup msg');
 		}
 	});
+	let routine = setTimeout('getLastMsg()', 1000);
 };
 
 var displayMsg = function(msgJSON){
@@ -43,12 +49,18 @@ var sendMsg = function(msgSent){
 	$.ajax({
 		url: 'msgSent.php',
 		type: 'POST',
-		data: {'msgSent' : msgSent}
-	}).done(function(){
-		getLastMsg();
+		data: {'msgSent' : msgSent},
+		success: function(){
+			console.log("reappel");
+		}
 	});
+
 };
 
+var getFocus = function(){
+	console.log("getFocus");
+	$("#message").focus();
+}
 
 // Fonction principale d'exécution
 $(document).ready( function(){
@@ -58,13 +70,17 @@ $(document).ready( function(){
 
 	// Récup de l'historique de msg
 	getLastMsg();
-	setInterval('getLastMsg()', 2000);
 
 	// Affichage de l'interface d'input
 	$('#chatBox').on('click', '#envoyerMsg', function(){
 		event.preventDefault;
 		sendMsg();
 	});
+
+	// getFocus();
+	setTimeout('getFocus()', 2000);
+	 // $("#message").focus();
+
 
 	// $('#update').on('click', function(){
 	// 	getLastMsg();
