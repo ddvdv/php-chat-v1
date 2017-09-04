@@ -1,4 +1,6 @@
+// Variable stockant l'id du dernier msg reçu, initialisaiton à 0
 let lastMsg = 0;
+
 
 // Ajax pr obtenir les derniers messages
 var getLastMsg = function(){
@@ -9,7 +11,7 @@ var getLastMsg = function(){
 		success: function(msgLog){
 			if (msgLog != ''){
 				$('#chatLog').append(displayMsg(msgLog));
-				let toTheBottom = $('#chatLog')[0].scrollHeight;
+				let toTheBottom = +$('#chatLog')[0].scrollHeight;
 				$('#chatLog').animate({ scrollTop: toTheBottom }, 'slow');
 			}
 			console.log('ajax recup msg');
@@ -18,12 +20,10 @@ var getLastMsg = function(){
 	let routine = setTimeout('getLastMsg()', 1000);
 };
 
+// Ajax pr afficher les msg obtenus par getLastMsg
 var displayMsg = function(msgJSON){
+	// parsing de la réponse puis boucle d'affichage
 	let msgParsed = JSON.parse(msgJSON);
-	console.log(msgParsed);
-	// let nbMsg = msgParsed.length;
-	// let numToDisplay = 10;
-	// let startPoint = nbMsg - numToDisplay;
 	let msgToDisplay = [];
 	for (var i = 0; i < msgParsed.length; i++) {
 		let id = +msgParsed[i]['idmessages'];
@@ -37,58 +37,101 @@ var displayMsg = function(msgJSON){
 		let msg = `<div id=${id} class="message" <span class="date">${date}</span></br>
 								<span class="user">${nom}</span>
 					 			<span class="content">${content}</div>` ;
-		console.log(msg);
 		msgToDisplay.push(msg);
 	}
 	return msgToDisplay;
 }
 
 // Ajax pour envoyer un msg
-var sendMsg = function(msgSent){
+var sendMsg = function(){
 	let textToSend = $('#message').val();
 	$.ajax({
 		url: 'msgSent.php',
 		type: 'POST',
-		data: {'msgSent' : msgSent},
-		success: function(){
-			console.log("reappel");
+		data: {'msgSent' : textToSend},
+		success: function(htmlBack){
+			console.log("sendMsg dans Ajax");
 		}
 	});
 
 };
 
-var getFocus = function(){
-	console.log("getFocus");
-	$("#message").focus();
-}
+// Ajax pour récupérer le bas du chat (form) et ajouter les event listener
+var getChatBox = function(){
+	$.ajax({
+		url: 'chatBox.php',
+		type: 'POST',
+		success: function(interface){
+			$('#chatBox').html(interface);
+			// Envoi de msg ajax
+			$('#chatBox').on('click', '#envoiMsg', function(event){
+				event.preventDefault();
+				sendMsg();
+				$('#message').val('');
+			});
 
-// Fonction principale d'exécution
+			// Ajax pr login
+			$('#chatBox').on('click', '#LogIn', function(event){
+				event.preventDefault();
+				let email = $('#email').val();
+				let password = $('#password').val();
+				$.ajax({
+					url: 'chatBox.php',
+					type: 'POST',
+					data: {'LogIn' : 'LogIn', 'email' : email, 'password' : password},
+					success: function(htmlBack){
+						$('#chatBox').html(htmlBack);
+					}
+				});
+			});
+
+			// Ajax pr logout
+			$('#chatBox').on('click', '#deconnect', function(event){
+				event.preventDefault();
+				$.ajax({
+					url: 'chatBox.php',
+					type: 'POST',
+					data: {'deconnect' : 'deconnect'},
+					success: function(htmlBack){
+						$('#chatBox').html(htmlBack);
+					}
+				});
+			});
+
+			// Ajax pour signup
+			$('#chatBox').on('click', '#SignUp', function(event){
+				event.preventDefault();
+				let name = $('#SUname').val();
+				let email = $('#SUemail').val();
+				let password1 = $('#SUpassword1').val();
+				let password2 = $('#SUpassword2').val();
+				$.ajax({
+					url: 'chatBox.php',
+					type: 'POST',
+					data: {'SignUp' : 'SignUp', 'name' : name, 'email' : email, 'password1' : password1, 'password2' : password2},
+					success: function(htmlBack){
+						$('#chatBox').html(htmlBack);
+					}
+				});
+			});
+
+		}
+	});
+};
+
+
+// Fonction principale d'exécution après chargement
 $(document).ready( function(){
 	
 	// Mise en place de la div vide pr affichage historique messages
-	$('body').prepend('<div id="chatLog"></div>');
+	$('.conversation').prepend('<div id="chatLog"></div>');
+
+	// Mise en place de la div vide pr interface box
+	$('.conversation').append('<div id="chatBox"></div>');
 
 	// Récup de l'historique de msg
 	getLastMsg();
-
-	// Affichage de l'interface d'input
-	$('#chatBox').on('click', '#envoyerMsg', function(){
-		event.preventDefault;
-		sendMsg();
-	});
-
-	// getFocus();
-	setTimeout('getFocus()', 2000);
-	 // $("#message").focus();
-
-
-	// $('#update').on('click', function(){
-	// 	getLastMsg();
-	// });
-	// Ajout d'une requête ajax pour recup les msg à une certaine fréquence
-	// $('')
-
-	//Ajout d'un éven pour pousser les nv msg de l'user directement dans le log
-	// $('#envoiMsg').
+	// Récup interface box
+	getChatBox();
 
 });

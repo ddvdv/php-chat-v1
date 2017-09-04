@@ -6,29 +6,29 @@
 function invitLog(){
 	echo('Log in
 		<form method="post">
-			<input type="" name="email" placeholder="email">
-			<input type="password" name="password" value="" placeholder="password">
-			<input type="submit" name="LogIn" value="Log In">
+			<input id="email" type="" name="email" placeholder="email">
+			<input id="password" type="password" name="password" value="" placeholder="password">
+			<input id="LogIn" type="submit" name="LogIn"  value="LogIn">
 		</form><br>
 		or Sign Up
 		<form method="post">
-			<input type="name" name="name" placeholder="name">
-			<input type="email" name="email" placeholder="email">
-			<input type="password" name="password1" value="" placeholder="password">
-			<input type="password" name="password2" value="" placeholder="password">
-			<input type="submit" name="SignUp" value="Sign Up">
+			<input id="SUname" name="name" placeholder="name">
+			<input id="SUemail" type="email" name="email" placeholder="email">
+			<input id="SUpassword1" type="password" name="password1" value="" placeholder="password">
+			<input id="SUpassword2" type="password" name="password2" value="" placeholder="password">
+			<input id="SignUp" type="submit" name="SignUp" value="SignUp">
 		</form>');
 }
 
 // Fonction affichant l'HTML pour l'envoi de msg
 function invitMsg(){
-	echo($_SESSION['name'].' dit:');
+	echo('<p>'.$_SESSION['name'].' dit:</p>');
 	echo('<form method="post">
 			<input type="text" name="message" id="message" autofocus>
-			<input id="envoiMsg" type="submit" name="envoyerMsg">
+			<input id="envoiMsg" type="submit" name="envoiMsg">
 		</form>
 		<form method="post">
-			<input type="submit" name="deconnect" value="Double cliquez pour vous déconnectez">
+			<input type="submit" id="deconnect" name="deconnect" value="Double cliquez pour vous déconnectez">
 		</form>');
 }
 
@@ -133,3 +133,14 @@ include 'connectDB.php';
 ?>
 
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link type="text/css" rel="Stylesheet" href="style.css" />
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+</html>
