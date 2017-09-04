@@ -4,7 +4,7 @@
 
 // Fonction affichant l'HTML pour le Login ou Signup
 function invitLog(){
-				echo('Log in
+	echo('Log in
 		<form method="post">
 			<input type="" name="email" placeholder="email">
 			<input type="password" name="password" value="" placeholder="password">
@@ -25,7 +25,7 @@ function invitMsg(){
 	echo($_SESSION['name'].' dit:');
 	echo('<form method="post">
 			<input type="text" name="message">
-			<input id="envoiMsg" type="submit" name="envoyer">
+			<input id="envoiMsg" type="submit" name="envoyerMsg">
 		</form>
 		<form method="post">
 			<input type="submit" name="deconnect" value="Double cliquez pour vous déconnectez">
