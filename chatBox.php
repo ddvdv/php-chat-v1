@@ -5,13 +5,13 @@
 // Fonction affichant l'HTML pour le Login ou Signup
 function invitLog(){
 	echo('Log in
-		<form method="post">
+		<form action="chatBox.php" method="post">
 			<input id="email" type="" name="email" placeholder="email">
 			<input id="password" type="password" name="password" value="" placeholder="password">
 			<input id="LogIn" type="submit" name="LogIn"  value="LogIn">
 		</form><br>
 		or Sign Up
-		<form method="post">
+		<form action="chatBox.php" method="post">
 			<input id="SUname" name="name" placeholder="name">
 			<input id="SUemail" type="email" name="email" placeholder="email">
 			<input id="SUpassword1" type="password" name="password1" value="" placeholder="password">
@@ -22,12 +22,12 @@ function invitLog(){
 
 // Fonction affichant l'HTML pour l'envoi de msg
 function invitMsg(){
-	echo('<p>'.$_SESSION['name'].' dit:</p>');
-	echo('<form method="post">
+	echo('<p>You, <span id="myName">'.$_SESSION['name'].'</span>, want to say:</p>');
+	echo('<form action="chatBox.php" method="post">
 			<input type="text" name="message" id="message" autofocus>
-			<input id="envoiMsg" type="submit" name="envoiMsg">
+			<input id="envoiMsg" type="submit" name="envoiMsg" value="Send">
 		</form>
-		<form method="post">
+		<form action="chatBox.php" method="post">
 			<input type="submit" id="deconnect" name="deconnect" value="Double cliquez pour vous déconnectez">
 		</form>');
 }
@@ -49,10 +49,11 @@ include 'connectDB.php';
 			$userId = $_SESSION['userId'];
 			$message = $_POST['message'];
 			// echo($userId);
-			// echo($message);
 			// return;
+			// if ($message != ""){
 			$req = $bdd->prepare("INSERT INTO messages (content, users_idusers) VALUES (? , ?) ");
 			$req->execute(array($message, $userId));
+			// }
 		};
 	// Dans tous les cas, proposer d'envoyer un msg en plus:
 	invitMsg();
@@ -137,10 +138,11 @@ include 'connectDB.php';
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<link type="text/css" rel="Stylesheet" href="style.css" />
+	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
 	<title>Document</title>
 </head>
-<body>
+<body id="chatBox" style="width: 80%; margin: 0px;">
 	
 </body>
 </html>

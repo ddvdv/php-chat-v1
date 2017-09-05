@@ -20,6 +20,9 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+
 	<noscript>
 		<meta http-equiv="refresh" content="1">	
 	</noscript>		

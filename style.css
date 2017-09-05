@@ -1,8 +1,5 @@
 @import url(http://weloveiconfonts.com/api/?family=entypo|fontawesome);
-	
-*{
-	outline: 1px dotted black;
-}
+
 
 body{
 	font-family: 'Nunito', sans-serif;
@@ -11,21 +8,24 @@ body{
 }
 
 .conversation{
+	margin-top: 50px;
 	border-radius: 3px;
-	width: 600px;
-	border: 10px red;
+	width: 430px;
+	margin: auto;	
+	height: 90%;
 	background-color: #34495e;
-	display: flex;
-	flex-direction: column;
 }
 
-.message{
-	margin-top: 20px;
+h2{
+	text-align: center;
+	padding-top: 10px;
 }
 
 #chatLog{
 	height: 500px;
 	overflow: scroll;
+	display: flex;
+	flex-direction: column;
 }
 
 #chatBox, #chatLog {
@@ -35,4 +35,57 @@ body{
 
 #chatBox{
 	max-height: 200px;
+	padding: 10px;
 }
+
+.message{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 8px;
+	width: 70%;
+	word-wrap: normal;
+}
+
+p{
+	margin: 0;
+}
+
+.msgBlock{
+	display: flex;
+	flex-direction: row;
+}
+
+.fromYou{
+	align-self: flex-end;
+	background-color: #3498db;
+	border-radius: 7px 0px 0px 7px;
+	color: #ecf0f1;
+	text-align: right;
+}
+
+.user{
+	opacity: 0.7;
+	font-size: 0.8em;
+}
+
+.content{
+	font-size: 1.1em;
+	font-style: italic;
+	word-wrap: break-word;
+}
+
+.fromYou .date{
+	float: left;
+}
+
+.fromMe{
+	align-self: flex-start;
+	border-radius: 0px 7px 7px 0px;
+	background-color: #ecf0f1;
+	color: #8ac1e5;
+}
+
+.fromMe .date{
+	float: right;
+}
+

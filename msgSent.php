@@ -6,7 +6,7 @@
 
 // Récup de la requête
 
-	if(isset($_POST['msgSent'])){
+	if(isset($_POST['msgSent']) AND $_POST['msgSent'] != ''){
 		$userId = $_SESSION['userId'];
 		$message = $_POST['msgSent'];
 	}

@@ -13,7 +13,7 @@
 	}
 
 
-	$req = $bdd->query("SELECT * FROM messages INNER JOIN users ON messages.users_idusers = users.idusers WHERE messages.idmessages > '$lastMsg' ORDER BY idmessages");
+	$req = $bdd->query("SELECT date, nom, content, idmessages FROM messages INNER JOIN users ON messages.users_idusers = users.idusers WHERE messages.idmessages > '$lastMsg' ORDER BY idmessages");
 
 	$sql_data= $req->fetchAll(PDO::FETCH_ASSOC);
 

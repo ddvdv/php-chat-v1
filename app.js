@@ -13,10 +13,19 @@ var getLastMsg = function(){
 				$('#chatLog').append(displayMsg(msgLog));
 				let toTheBottom = +$('#chatLog')[0].scrollHeight;
 				$('#chatLog').animate({ scrollTop: toTheBottom }, 'slow');
-			}
-			console.log('ajax recup msg');
+							$('.date').fadeOut(10);
+				$('.message').hover(
+					function(){
+						$(this).find('.date').fadeIn(10);
+					},	function(){
+						$(this).find('.date').fadeOut(10);
+					}
+				);
+				console.log('ajax recup msg');
+				}
 		}
 	});
+	
 	let routine = setTimeout('getLastMsg()', 1000);
 };
 
@@ -34,9 +43,14 @@ var displayMsg = function(msgJSON){
 		let date = msgParsed[i]['date'];
 		let nom = msgParsed[i]['nom'];
 		let content = msgParsed[i]['content'];
-		let msg = `<div id=${id} class="message" <span class="date">${date}</span></br>
-								<span class="user">${nom}</span>
-					 			<span class="content">${content}</div>` ;
+		let myName = $('#myName').text();
+		let msgClass = "message";
+		myName == nom ? (msgClass += " fromMe", nom = 'you') : msgClass += " fromYou"; 
+		let msg = `	<div id=${id} class="${msgClass}">
+						<p class="user"> ${nom} said: <span class="date">at ${date} </span> </p>
+			 			<p class="content"> ${content} </p>
+					</div>
+					`;
 		msgToDisplay.push(msg);
 	}
 	return msgToDisplay;
@@ -81,6 +95,8 @@ var getChatBox = function(){
 					data: {'LogIn' : 'LogIn', 'email' : email, 'password' : password},
 					success: function(htmlBack){
 						$('#chatBox').html(htmlBack);
+						lastMsg = 0;
+						$('#chatLog').html('');
 					}
 				});
 			});
@@ -94,6 +110,8 @@ var getChatBox = function(){
 					data: {'deconnect' : 'deconnect'},
 					success: function(htmlBack){
 						$('#chatBox').html(htmlBack);
+						lastMsg = 0;
+						$('#chatLog').html('');
 					}
 				});
 			});
@@ -111,6 +129,8 @@ var getChatBox = function(){
 					data: {'SignUp' : 'SignUp', 'name' : name, 'email' : email, 'password1' : password1, 'password2' : password2},
 					success: function(htmlBack){
 						$('#chatBox').html(htmlBack);
+						lastMsg = 0;
+						$('#chatLog').html('');
 					}
 				});
 			});
@@ -124,7 +144,7 @@ var getChatBox = function(){
 $(document).ready( function(){
 	
 	// Mise en place de la div vide pr affichage historique messages
-	$('.conversation').prepend('<div id="chatLog"></div>');
+	$('.conversation').append('<div id="chatLog"></div>');
 
 	// Mise en place de la div vide pr interface box
 	$('.conversation').append('<div id="chatBox"></div>');
